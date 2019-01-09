@@ -1,0 +1,93 @@
+﻿  Raytracing_n.cpp
+e:\workspace\megasync\raytracing_n\raytracing_n\vec3.h(66): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\vec3.h(160): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\mathf.h(16): warning C4244: “初始化”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\hitable.h(13): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\hitable.h(14): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\hitable.h(80): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\sphere.h(8): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\sphere.h(9): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\sphere.h(11): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\sphere.h(71): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\sphere.h(73): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\hitable_list.h(26): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\hitable_list.h(55): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\camera.h(11): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\camera.h(21): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\camera.h(38): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\camera.h(55): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\perlin.h(34): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\perlin.h(35): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\perlin.h(36): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\perlin.h(70): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\texture.h(60): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\texture.h(61): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\texture.h(66): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\texture.h(67): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\texture.h(68): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\pdf.h(8): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\pdf.h(9): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\pdf.h(10): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\pdf.h(30): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\pdf.h(57): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\material.h(23): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\material.h(39): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\material.h(48): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\material.h(88): warning C4244: “return”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\material.h(138): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\aarect.h(12): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\aarect.h(42): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\aarect.h(47): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\aarect.h(58): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\aarect.h(73): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\constant_medium.h(24): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\constant_medium.h(36): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\geometry.h(24): warning C4018: “<”: 有符号/无符号不匹配
+e:\workspace\megasync\raytracing_n\raytracing_n\model.h(45): warning C4018: “<”: 有符号/无符号不匹配
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(54): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(91): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(98): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(99): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(99): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(100): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(104): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(104): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(109): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(109): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(112): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(118): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(119): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(125): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(147): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(165): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(166): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(167): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(193): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(194): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(195): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(219): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(237): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(238): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(247): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(257): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(259): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(262): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(264): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(269): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(273): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(292): warning C4305: “参数”: 从“double”到“float”截断
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(300): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(393): warning C4244: “初始化”: 从“_Rep”转换到“int”，可能丢失数据
+          with
+          [
+              _Rep=__int64
+          ]
+e:\workspace\megasync\raytracing_n\raytracing_n\raytracing_n.cpp(409): warning C4244: “初始化”: 从“_Rep”转换到“int”，可能丢失数据
+          with
+          [
+              _Rep=__int64
+          ]
+Raytracing_n.obj : error LNK2001: 无法解析的外部符号 "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z)
+Raytracing_n.obj : error LNK2001: 无法解析的外部符号 "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ)
+Raytracing_n.obj : error LNK2001: 无法解析的外部符号 "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ)
+E:\WorkSpace\MEGAsync\Raytracing_n\x64\Release\Raytracing_n.exe : fatal error LNK1120: 3 个无法解析的外部命令
