@@ -37,3 +37,6 @@ results
 x64
 Debug
 Release
+Raytracing_n\Debug
+Raytracing_n\Release
+Raytracing_n\x64
