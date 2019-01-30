@@ -102,6 +102,9 @@
     <ClInclude Include="rng.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="env_sphere.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Raytracing_n.cpp">

@@ -113,6 +113,17 @@ public:
 	texture *albedo;
 };
 
+class disney_diffuse :public material {
+public:
+	disney_diffuse(texture *a) :albedo(a) {}
+
+	float scattering_pdf(const ray& r_in, const hit_record& rec, const ray& scattered) const {
+
+	}
+
+	texture *albedo;
+};
+
 class orennayar : public material {
 public:
 	orennayar(texture *a, float sigma) : albedo(a) {
@@ -136,7 +147,32 @@ public:
 			dot(unit_vector(scattered.direction()), uvw.v()),
 			dot(unit_vector(scattered.direction()), uvw.w())
 		));
+		float sinThetaI = SinTheta(wi);
+		float sinThetaO = SinTheta(wo);
 
+		float maxCos = 0;
+		if (sinThetaI > 1e-4 && sinThetaO > 1e-4)
+		{
+			float sinPhiI = SinPhi(wi), cosPhiI = CosPhi(wi);
+			float sinPhiO = SinPhi(wo), cosPhiO = CosPhi(wo);
+			float dCos = cosPhiI * cosPhiO + sinPhiI * sinPhiO;
+			maxCos = ffmax((float)0, dCos);
+		}
+
+		float sinAlpha, tanBeta;
+		if (AbsCosTheta(wi) > AbsCosTheta(wo)) {
+			sinAlpha = sinThetaO;
+			tanBeta = sinThetaI / AbsCosTheta(wi);
+		}
+		else {
+			sinAlpha = sinThetaI;
+			tanBeta = sinThetaO / AbsCosTheta(wo);
+		}
+		float cosine = CosTheta(wi);
+		if (cosine < 0)
+			cosine = 0;
+		return cosine * (A + B * maxCos * sinAlpha * tanBeta) / M_PI;
+		/*
 		float sin_theta_in = SinTheta(wo);
 		float sin_theta_out = SinTheta(wi);
 
@@ -156,6 +192,7 @@ public:
 		float sin_alpha = AbsCosTheta(wo) > AbsCosTheta(wi) ? sin_theta_in : sin_theta_out;
 		float tan_beta = AbsCosTheta(wo) > AbsCosTheta(wi) ? sin_theta_out / AbsCosTheta(wo) : sin_theta_in / AbsCosTheta(wi);
 		return (A + B * maxcos_phi * sin_alpha * tan_beta) / M_PI;
+		*/
 	}
 
 	virtual bool scatter(const ray& r_in, const hit_record& hrec, scatter_record& srec) const {

@@ -29,18 +29,33 @@ public:
 
 class cosine_pdf : public pdf {
 public:
-	cosine_pdf(const vec3& w) { uvw.build_from_w(w); }
+	cosine_pdf(const vec3& w): n(w) { uvw.build_from_w(w); }
 	virtual float value(const vec3& wo, const vec3& wi) const {
-		float cosine = dot(unit_vector(wi), uvw.w());
+		/*float cosine = dot(unit_vector(wi), uvw.w());
 		if (cosine > 0)
 			return cosine / M_PI;
+		else
+			return 0;*/
+
+		float cosineO = dot(unit_vector(wo), n);
+		float cosineI = dot(unit_vector(wi), n);
+		if (cosineI * cosineO < 0)
+			return std::abs(cosineI) / M_PI;
 		else
 			return 0;
 	}
 	virtual vec3 generate(const vec3 &wo) const {
-		return uvw.local(random_cosine_direction());
+		vec3 gdir = random_cosine_direction();
+		if (dot(wo, n) > 0)
+		{
+			gdir.e[2] *= -1;
+		}
+		vec3 wi = uvw.local(gdir);
+
+		return wi;
 	}
 	onb uvw;
+	const vec3 n;
 };
 
 class onrennayar_pdf :public pdf {
@@ -51,19 +66,20 @@ public:
 		//vec3 half_vector = (unit_vector(wi) + unit_vector(wo)) / 2;
 		float cosineO = dot(unit_vector(wo), n);
 		float cosineI = dot(unit_vector(wi), n);
-		if (cosineI * cosineO > 0)
+		if (cosineI * cosineO < 0)
 			return std::abs(cosineI) / M_PI;
 		else
 			return 0;
 	}
 
 	virtual vec3 generate(const vec3& wo) const {
-		vec3 wi = uvw.local(random_cosine_direction());// unit_vector(wo) + 2 * dot(unit_vector(-wo), n) * n;
-		/*if (dot(wo, n) < 0)
+		vec3 gdir = random_cosine_direction();
+		if (dot(wo, n) > 0)
 		{
-			float l = dot(wi, uvw.w());
-			wi -= 2 * l * uvw.w();
-		}*/
+			gdir.e[2] *= -1;
+		}
+		vec3 wi = uvw.local(gdir);
+		
 		return wi;
 	}
 	onb uvw;
@@ -112,26 +128,24 @@ public:
 	virtual vec3 generate(const vec3 &wo) const {
 		float u1 = s_rng.UniformFloat();
 		float u2 = s_rng.UniformFloat();
-		vec3 wwo = unit_vector(vec3(dot(wo, uvw.u()), dot(wo, uvw.v()), dot(wo, uvw.w())));
-		/*float u1 = drand48();
-		float u2 = drand48();*/
+		vec3 wwo = unit_vector(vec3(dot(-wo, uvw.u()), dot(-wo, uvw.v()), dot(-wo, uvw.w())));
 		vec3 u(u1, u2, 0);
 		vec3 wh = distribution->Sample_wh(wwo, u);
 		vec3 wi = Reflect(unit_vector(wwo), wh);
 		vec3 wwi = unit_vector(wi.x() * uvw.u() + wi.y() * uvw.v()+ wi.z() * uvw.w());
-		if (SameHemisphere(wi, wwo))
+		/*if (SameHemisphere(wi, wwo))
 		{
 			*pdf_value = 0;
 			return vec3(0.0);
-		}
+		}*/
 
-		//if (dot(wo, wh) != dot(-wi, wh))
-		//{
-		//	*pdf_value = 0;
-		//	return vec3(0.0);
-		//}
+		
 		
 		*pdf_value = distribution->Pdf(wwo, wh) / (4 * dot(wwo, wh));
+		if (SameHemisphere(wi, wwo))
+		{
+			*pdf_value = 0;
+		}
 		//wwi *= distribution->Pdf(unit_vector(wwo), wh) / (4 * dot(unit_vector(wwo), wh));
 		return wwi;
 	}
