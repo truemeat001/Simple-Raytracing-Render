@@ -142,7 +142,7 @@ public:
 		
 		
 		*pdf_value = distribution->Pdf(wwo, wh) / (4 * dot(wwo, wh));
-		if (SameHemisphere(wi, wwo))
+		if (!SameHemisphere(wi, wwo))
 		{
 			*pdf_value = 0;
 		}
