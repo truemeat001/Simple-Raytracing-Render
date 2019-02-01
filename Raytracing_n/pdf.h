@@ -102,28 +102,7 @@ public:
 	}
 
 	virtual float value(const vec3& wo, const vec3& wi) const { 
-
 		return *pdf_value;
-		//vec3 wwo = vec3(
-		//	dot(unit_vector(wo), uvw.u()),
-		//	dot(unit_vector(wo), uvw.v()),
-		//	dot(unit_vector(wo), uvw.w()));
-		//vec3 wwi = vec3(
-		//	dot(unit_vector(wi), uvw.u()),
-		//	dot(unit_vector(wi), uvw.v()),
-		//	dot(unit_vector(wi), uvw.w())
-		//);
-		//vec3 wh = unit_vector(wwi + wwo);
-		///*vec3 wo = unit_vector(r_in.direction());
-		//vec3 wi = unit_vector(scattered.direction());*/
-
-		//float cosThetaI = AbsCosTheta(wwi);
-		//float cosThetaO = AbsCosTheta(wwo);
-
-		//float cosine = dot(wh, wwi);
-		////float F = schlick(cosine, 0.9);
-		//float F = 0.8;
-		//return distribution->D(wh) * distribution->G(wwo, wwi) * F / (4 * cosThetaI * cosThetaO);
 	}
 	virtual vec3 generate(const vec3 &wo) const {
 		float u1 = s_rng.UniformFloat();
@@ -133,20 +112,13 @@ public:
 		vec3 wh = distribution->Sample_wh(wwo, u);
 		vec3 wi = Reflect(unit_vector(wwo), wh);
 		vec3 wwi = unit_vector(wi.x() * uvw.u() + wi.y() * uvw.v()+ wi.z() * uvw.w());
-		/*if (SameHemisphere(wi, wwo))
-		{
-			*pdf_value = 0;
-			return vec3(0.0);
-		}*/
-
 		
-		
-		*pdf_value = distribution->Pdf(wwo, wh) / (4 * dot(wwo, wh));
+		*pdf_value = distribution->D(wh) * distribution->G(wo, wi)  / (4 * AbsCosTheta(wi) * AbsCosTheta(wwo));
+		//*pdf_value = distribution->Pdf(wwo, wh) / (4 * dot(wwo, wh));
 		if (!SameHemisphere(wi, wwo))
 		{
 			*pdf_value = 0;
 		}
-		//wwi *= distribution->Pdf(unit_vector(wwo), wh) / (4 * dot(unit_vector(wwo), wh));
 		return wwi;
 	}
 	float *pdf_value;

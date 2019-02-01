@@ -138,9 +138,9 @@ public:
 		uvw.build_from_w(rec.normal);
 
 		vec3 wo = unit_vector(vec3(
-			dot(unit_vector(r_in.direction()), uvw.u()),
-			dot(unit_vector(r_in.direction()), uvw.v()),
-			dot(unit_vector(r_in.direction()), uvw.w())
+			dot(unit_vector(-r_in.direction()), uvw.u()),
+			dot(unit_vector(-r_in.direction()), uvw.v()),
+			dot(unit_vector(-r_in.direction()), uvw.w())
 		));
 		vec3 wi = unit_vector(vec3(
 			dot(unit_vector(scattered.direction()), uvw.u()),
@@ -220,9 +220,9 @@ public:
 
 		
 		vec3 wo = unit_vector(vec3(
-			dot(unit_vector(r_in.direction()), uvw.u()), 
-			dot(unit_vector(r_in.direction()), uvw.v()), 
-			dot(unit_vector(r_in.direction()), uvw.w())
+			dot(unit_vector(-r_in.direction()), uvw.u()), 
+			dot(unit_vector(-r_in.direction()), uvw.v()), 
+			dot(unit_vector(-r_in.direction()), uvw.w())
 		));
 		vec3 wi = unit_vector(vec3(
 			dot(unit_vector(scattered.direction()), uvw.u()), 
@@ -237,8 +237,8 @@ public:
 		float cosThetaO = AbsCosTheta(wo);
 
 		float F = 1;
-		return distribution->D(wh) * distribution->G(wo, wi) * F / (4 * cosThetaI * cosThetaO);
-	
+		//return distribution->D(wh) * distribution->G(wo, wi) * F / (4 * cosThetaI * cosThetaO);
+		return distribution->Pdf(wo, wh) / (4 * dot(wo, wh));
 	}
 
 	virtual bool scatter(const ray& r_in, const hit_record& hrec, scatter_record& srec) const {

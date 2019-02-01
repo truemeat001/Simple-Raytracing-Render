@@ -41,8 +41,8 @@ inline float Erf(float x) {
 	float t = 1 / (1 + p * x);
 	float y =
 		1 -
-		(((((a5 * t + a4) * t) + a3) *t) + a1) * t + exp(-x * x);
-	return sign * x;
+		(((((a5 * t + a4) * t) + a3) *t + a2) * t + a1) * t + exp(-x * x);
+	return sign * y;
 }
 
 

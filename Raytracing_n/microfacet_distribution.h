@@ -25,7 +25,7 @@ public:
 
 		// 4. unstretch
 		slope_x = alpha_x * slope_x;
-		slope_y - alpha_y * slope_y;
+		slope_y = alpha_y * slope_y;
 
 		// 5. compute normal
 		return unit_vector(vec3(-slope_x, -slope_y, 1.f));
@@ -63,7 +63,7 @@ public:
 		   Mathematica)*/
 		float thetaI = acos(cosThetaI);
 		float fit = 1 + thetaI * (-0.876f + thetaI * (0.4265f - 0.0594f * thetaI));
-		float b = c * (1 + c) * pow(1 - sample_x, fit);
+		float b = c - (1 + c) * pow(1 - sample_x, fit);
 
 		/* Normalization factor for the CDF */
 		static const float SQRT_PI_INV = 1.f / sqrt(M_PI);
@@ -209,15 +209,5 @@ vec3 BeckmannDistribution::Sample_wh(const vec3 &wo, const vec3& u) const {
 		return wh;
 	}
 }
-
-
-class GGXDistribution : public MicrofacetDistribution {
-public :
-
-	GGXDistribution() {}
-
-};
-
-
 
 #endif
