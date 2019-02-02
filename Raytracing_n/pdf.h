@@ -46,7 +46,7 @@ public:
 	}
 	virtual vec3 generate(const vec3 &wo) const {
 		vec3 gdir = random_cosine_direction();
-		if (dot(wo, n) > 0)
+		if (dot(-wo, n) > 0)
 		{
 			gdir.e[2] *= -1;
 		}
@@ -60,21 +60,49 @@ public:
 
 class onrennayar_pdf :public pdf {
 public:
-	onrennayar_pdf(const vec3& w) : n(w) { uvw.build_from_w(w); }
-	virtual float value(const vec3& wo, const vec3& wi) const {
-		//return 1;
-		//vec3 half_vector = (unit_vector(wi) + unit_vector(wo)) / 2;
-		float cosineO = dot(unit_vector(wo), n);
-		float cosineI = dot(unit_vector(wi), n);
-		if (cosineI * cosineO < 0)
-			return std::abs(cosineI) / M_PI;
-		else
-			return 0;
+	onrennayar_pdf(const vec3& w, const float a, const float b) : n(w), A(a), B(b) { uvw.build_from_w(w); }
+	virtual float value(const vec3& wwo, const vec3& wwi) const {
+
+		vec3 wo = unit_vector(vec3(
+			dot(unit_vector(-wwo), uvw.u()),
+			dot(unit_vector(-wwo), uvw.v()),
+			dot(unit_vector(-wwo), uvw.w())
+		));
+		vec3 wi = unit_vector(vec3(
+			dot(unit_vector(wwi), uvw.u()),
+			dot(unit_vector(wwi), uvw.v()),
+			dot(unit_vector(wwi), uvw.w())
+		));
+		float sinThetaI = SinTheta(wi);
+		float sinThetaO = SinTheta(wo);
+
+		float maxCos = 0;
+		if (sinThetaI > 1e-4 && sinThetaO > 1e-4)
+		{
+			float sinPhiI = SinPhi(wi), cosPhiI = CosPhi(wi);
+			float sinPhiO = SinPhi(wo), cosPhiO = CosPhi(wo);
+			float dCos = cosPhiI * cosPhiO + sinPhiI * sinPhiO;
+			maxCos = ffmax((float)0, dCos);
+		}
+
+		float sinAlpha, tanBeta;
+		if (AbsCosTheta(wi) > AbsCosTheta(wo)) {
+			sinAlpha = sinThetaO;
+			tanBeta = sinThetaI / AbsCosTheta(wi);
+		}
+		else {
+			sinAlpha = sinThetaI;
+			tanBeta = sinThetaO / AbsCosTheta(wo);
+		}
+		float cosine = CosTheta(wi);
+		if (cosine < 0)
+			cosine = 0;
+		return cosine * (A + B * maxCos * sinAlpha * tanBeta) / M_PI;
 	}
 
 	virtual vec3 generate(const vec3& wo) const {
 		vec3 gdir = random_cosine_direction();
-		if (dot(wo, n) > 0)
+		if (dot(-wo, n) > 0)
 		{
 			gdir.e[2] *= -1;
 		}
@@ -84,6 +112,7 @@ public:
 	}
 	onb uvw;
 	const vec3 n;
+	float A, B;
 };
 
 

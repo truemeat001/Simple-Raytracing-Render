@@ -132,73 +132,15 @@ public:
 		B = 0.45 * sigma * sigma / (sigma * sigma + 0.09);
 	}
 	float scattering_pdf(const ray& r_in, const hit_record& rec, const ray& scattered) const {
-
-		//Compute cosine term of Orne-Nayar model
-		onb uvw;
-		uvw.build_from_w(rec.normal);
-
-		vec3 wo = unit_vector(vec3(
-			dot(unit_vector(-r_in.direction()), uvw.u()),
-			dot(unit_vector(-r_in.direction()), uvw.v()),
-			dot(unit_vector(-r_in.direction()), uvw.w())
-		));
-		vec3 wi = unit_vector(vec3(
-			dot(unit_vector(scattered.direction()), uvw.u()),
-			dot(unit_vector(scattered.direction()), uvw.v()),
-			dot(unit_vector(scattered.direction()), uvw.w())
-		));
-		float sinThetaI = SinTheta(wi);
-		float sinThetaO = SinTheta(wo);
-
-		float maxCos = 0;
-		if (sinThetaI > 1e-4 && sinThetaO > 1e-4)
-		{
-			float sinPhiI = SinPhi(wi), cosPhiI = CosPhi(wi);
-			float sinPhiO = SinPhi(wo), cosPhiO = CosPhi(wo);
-			float dCos = cosPhiI * cosPhiO + sinPhiI * sinPhiO;
-			maxCos = ffmax((float)0, dCos);
-		}
-
-		float sinAlpha, tanBeta;
-		if (AbsCosTheta(wi) > AbsCosTheta(wo)) {
-			sinAlpha = sinThetaO;
-			tanBeta = sinThetaI / AbsCosTheta(wi);
-		}
-		else {
-			sinAlpha = sinThetaI;
-			tanBeta = sinThetaO / AbsCosTheta(wo);
-		}
-		float cosine = CosTheta(wi);
-		if (cosine < 0)
-			cosine = 0;
-		return cosine * (A + B * maxCos * sinAlpha * tanBeta) / M_PI;
-		/*
-		float sin_theta_in = SinTheta(wo);
-		float sin_theta_out = SinTheta(wi);
-
-		float sin_phi_in = SinPhi(wo);
-		float sin_phi_out = SinPhi(wi);
-
-		float cos_phi_in = CosPhi(wo);
-		float cos_phi_out = CosPhi(wi);
-
-		float maxcos_phi = 0;
-		if (sin_theta_in > 1e-4 && sin_theta_out > 1e-4)
-		{
-			float dcos = cos_phi_in * cos_phi_out + sin_phi_in * sin_phi_out;
-			maxcos_phi = ffmax(0, dcos);
-		}
-		// Compute sine and tangent terms of  Oren-Nayar model
-		float sin_alpha = AbsCosTheta(wo) > AbsCosTheta(wi) ? sin_theta_in : sin_theta_out;
-		float tan_beta = AbsCosTheta(wo) > AbsCosTheta(wi) ? sin_theta_out / AbsCosTheta(wo) : sin_theta_in / AbsCosTheta(wi);
-		return (A + B * maxcos_phi * sin_alpha * tan_beta) / M_PI;
-		*/
+		float consine = dot(rec.normal, unit_vector(scattered.direction()));
+		if (consine < 0) consine = 0;
+		return consine / M_PI;
 	}
 
 	virtual bool scatter(const ray& r_in, const hit_record& hrec, scatter_record& srec) const {
 		srec.is_specular = false;
 		srec.attenuation = albedo->value(hrec.u, hrec.v, hrec.p);
-		srec.pdf_ptr = new onrennayar_pdf(hrec.normal);
+		srec.pdf_ptr = new onrennayar_pdf(hrec.normal, A, B);
 		return true;
 	}
 	texture* albedo;
