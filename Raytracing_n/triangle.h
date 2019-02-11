@@ -17,7 +17,7 @@ public :
 		normal = cross(p1 - p0, p2 - p0);
 		normal = unit_vector(normal);
 	};
-	virtual bool hit(const ray& r, float t0, float t1, hit_record& rec) const;
+	virtual bool hit(const ray& r, float t0, float t1, hit_record& rec, bool is_medium = false) const;
 	virtual bool bounding_box(float t0, float t1, aabb& box)const {
 		float xmin = ffmin(p0.x(), p1.x());
 		xmin = ffmin(xmin, p2.x());
@@ -66,6 +66,8 @@ public :
 	vec3 p0, p1, p2;
 
 	vec3 points[3];
+private:
+	bool hit(bool isfront, const ray& r, float t0, float t1, hit_record& rec) const;
 };
 /*
 bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec) const {
@@ -113,18 +115,32 @@ bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec) const {
 	return true;
 }*/
 
-bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec) const {
-	float u, v, t;
+bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec, bool is_medium) const {
+	bool ishit = hit(true, r, t0, t1, rec);
+	if(!ishit && is_medium)
+	{
+		ishit = hit(false, r, t0, t1, rec);
+	}
+	return ishit;
+}
 
+bool triangle::hit(bool isfront, const ray& r, float t0, float t1, hit_record& rec) const {
+	float u, v, t;
+	
 	vec3 e1 = p1 - p0;
 	vec3 e2 = p2 - p0;
+	if (!isfront)
+	{
+		e1 = p0 - p1;
+		e2 = p2 - p1;
+	}
 
 	vec3 dir = r.direction() / r.direction().length();
 
 	vec3 P = cross(dir, e2);
 
 	float det = dot(e1, P);
-	
+
 
 	vec3 T;
 	if (det > 0)
@@ -172,5 +188,4 @@ bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec) const {
 	rec.t = t;
 	return true;
 }
-
 #endif

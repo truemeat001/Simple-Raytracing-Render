@@ -9,7 +9,7 @@ class bvh_node :public hitable {
 public:
 	bvh_node() {}
 	bvh_node(hitable **l, int n, float time0, float time1);
-	virtual bool hit(const ray& r, float tmin, float tmax, hit_record& rec) const;
+	virtual bool hit(const ray& r, float tmin, float tmax, hit_record& rec, bool is_medium = false) const;
 	virtual bool bounding_box(float t0, float t1, aabb& box) const;
 	hitable *left;
 	hitable *right;
@@ -60,13 +60,13 @@ bool bvh_node::bounding_box(float t0, float t1, aabb& b)const
 	return true;
 }
 
-bool bvh_node::hit(const ray& r, float t_min, float t_max, hit_record& rec) const
+bool bvh_node::hit(const ray& r, float t_min, float t_max, hit_record& rec, bool is_medium) const
 {
 	if (box.hit(r, t_min, t_max))
 	{
 		hit_record left_rec, right_rec;
-		bool hit_left = left->hit(r, t_min, t_max, left_rec);
-		bool hit_right = right->hit(r, t_min, t_max, right_rec);
+		bool hit_left = left->hit(r, t_min, t_max, left_rec, is_medium);
+		bool hit_right = right->hit(r, t_min, t_max, right_rec, is_medium);
 		if (hit_left && hit_right)
 		{
 			if (left_rec.t < right_rec.t)

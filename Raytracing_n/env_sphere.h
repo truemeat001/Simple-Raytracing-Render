@@ -9,7 +9,7 @@ class env_sphere :public hitable
 public:
 	env_sphere();
 	env_sphere(vec3 cen, float r, material *m):center(cen), radius(r), mat_ptr(m){}
-	virtual bool hit(const ray& r, float tmin, float tmax, hit_record& rec) const;
+	virtual bool hit(const ray& r, float tmin, float tmax, hit_record& rec, bool is_medium = false) const;
 	virtual bool bounding_box(float t0, float t1, aabb& box)const;
 	virtual float pdf_value(const vec3& o, const vec3& v) const;
 
@@ -24,7 +24,7 @@ bool env_sphere::bounding_box(float t0, float t1, aabb& box)const {
 	return true;
 }
 
-bool env_sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const {
+bool env_sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec, bool is_medium) const {
 	vec3 oc = center - r.origin();
 	float proj = dot(r.direction(), oc);
 	float distance2 = oc.squared_length() - proj * proj;

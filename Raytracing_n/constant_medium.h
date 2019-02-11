@@ -7,7 +7,7 @@ public:
 	{
 		phase_function = new isotropic(a);
 	}
-	virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec)const;
+	virtual bool hit(const ray& r, float t_min, float t_max, hit_record& rec, bool is_medium = false)const;
 	virtual bool bounding_box(float t0, float t1, aabb& box)const {
 		return boundary->bounding_box(t0, t1, box);
 	}
@@ -16,12 +16,12 @@ public:
 	material *phase_function;
 };
 
-bool constant_medium::hit(const ray& r, float t_min, float t_max, hit_record& rec) const {
+bool constant_medium::hit(const ray& r, float t_min, float t_max, hit_record& rec, bool is_medium) const {
 	bool db = (drand48() < 0.00001);
 	db = false;
 	hit_record rec1, rec2;
-	if (boundary->hit(r, -FLT_MAX, FLT_MAX, rec1)) {
-		if (boundary->hit(r, rec1.t + 0.0001, FLT_MAX, rec2))
+	if (boundary->hit(r, -FLT_MAX, FLT_MAX, rec1, true)) {
+		if (boundary->hit(r, rec1.t + 0.0001, FLT_MAX, rec2, true))
 		{
 			if (db) std::cerr << "\nt0 t1 " << rec1.t << " " << rec2.t << "\n";
 			if (rec1.t < t_min)
