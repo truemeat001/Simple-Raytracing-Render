@@ -14,9 +14,24 @@ public :
 		points[0] = p0;
 		points[1] = p1;
 		points[2] = p2;
+		uvs[0] = vec3(0.0);
+		uvs[1] = vec3(0.0);
+		uvs[2] = vec3(0.0);
 		normal = cross(p1 - p0, p2 - p0);
 		normal = unit_vector(normal);
 	};
+	triangle(vec3 _p0, vec3 _p1, vec3 _p2, material *mat, vec3 _uv0, vec3 _uv1, vec3 _uv2) :
+		p0(_p0), p1(_p1), p2(_p2), mp(mat) {
+		points[0] = p0;
+		points[1] = p1;
+		points[2] = p2;
+		uvs[0] = _uv0;
+		uvs[1] = _uv1;
+		uvs[2] = _uv2;
+		normal = cross(p1 - p0, p2 - p0);
+		normal = unit_vector(normal);
+	};
+	
 	virtual bool hit(const ray& r, float t0, float t1, hit_record& rec, bool is_medium = false) const;
 	virtual bool bounding_box(float t0, float t1, aabb& box)const {
 		float xmin = ffmin(p0.x(), p1.x());
@@ -66,54 +81,10 @@ public :
 	vec3 p0, p1, p2;
 
 	vec3 points[3];
+	vec3 uvs[3];
 private:
 	bool hit(bool isfront, const ray& r, float t0, float t1, hit_record& rec) const;
 };
-/*
-bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec) const {
-	vec3 v0v1 = p1 - p0;
-	vec3 v0v2 = p2 - p0;
-
-	vec3 N = cross(v0v1, v0v2);
-
-	float area = N.length();
-
-	float NdotRayDirection = dot(N, r.direction());
-	if (fabs(NdotRayDirection) < 0.001)
-		return false;
-
-	float d = dot(N, p0);
-
-	float t = (dot(N, r.origin()) + d) / NdotRayDirection;
-
-	if (t < 0)
-		return false;
-	vec3 p = r.origin() + t * r.direction();
-	vec3 c;
-	vec3 edge0 = p1 - p0;
-	vec3 vp0 = p - p0;
-	c = cross(edge0, vp0);
-	if (dot(N, c) < 0)
-		return false;
-
-	vec3 edge1 = p2 - p1;
-	vec3 vp1 = p - p1;
-	c = cross(edge1, vp1);
-	if (dot(N, c) < 0)
-		return false;
-
-	vec3 edge2 = p0 - p2;
-	vec3 vp2 = p - p2;
-	c = cross(edge2, vp2);
-	if (dot(N, c) < 0)
-		return false;
-
-	rec.mat_ptr = mp;
-	rec.normal = normal;
-	rec.p = p;
-	rec.t = (p - r.origin()).length();
-	return true;
-}*/
 
 bool triangle::hit(const ray& r, float t0, float t1, hit_record& rec, bool is_medium) const {
 	bool ishit = hit(true, r, t0, t1, rec);
@@ -179,12 +150,15 @@ bool triangle::hit(bool isfront, const ray& r, float t0, float t1, hit_record& r
 	if (t < 0.0001)
 		return false;
 
-	rec.u = 0;
-	rec.v = 0;
+	vec3 uv = (1 - u - v) * uvs[0] + u * uvs[1] + v * uvs[2];
+
+	rec.u = uv.x();
+	rec.v = uv.y();
 	rec.mat_ptr = mp;
+
 	rec.normal = normal;
 	rec.p = (1 - u - v) * p0 + u * p1 + v * p2;
-	t = (rec.p - r.origin()).length();
+	//t = (rec.p - r.origin()).length();
 	rec.t = t;
 	return true;
 }

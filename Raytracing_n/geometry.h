@@ -13,6 +13,7 @@ public :
 	int gettrianglecount();
 private:
 	std::vector<vec3> vertices_;
+	std::vector<vec3> texcoords_;
 	std::vector<triangle*> triangles;
 	int triangleCount;
 	material* mp;
@@ -26,23 +27,43 @@ geometry::geometry(aiMesh& mesh, material *mat, vec3 scale)
 	{
 		vertices_.push_back(vec3(mesh.mVertices[i].x, mesh.mVertices[i].y, mesh.mVertices[i].z));
 	}
-
+	
+	int uvChannelCount = mesh.GetNumUVChannels();
+	if (uvChannelCount > 0)
+	{
+		texcoords_.reserve(mesh.mNumVertices);
+		for (int i = 0; i < uvChannelCount; i++)
+		{
+			aiVector3D* aiTextureCoordinates = mesh.mTextureCoords[i];
+			for (int j = 0; j < mesh.mNumVertices; j++)
+			{
+				texcoords_.push_back(vec3(reinterpret_cast<const float*>(&aiTextureCoordinates[j])));
+			}
+		}
+	}
 	
 
 	if (mesh.HasFaces())
 	{
 		triangleCount = mesh.mNumFaces;
 		triangles.reserve(triangleCount);
+		aiVector3D *normals = mesh.mNormals;
 		vec3 p[3];
+		vec3 uv[3];
 		for (int i = 0; i < triangleCount; i++)
 		{
 			aiFace* face = &mesh.mFaces[i];
 			for (int j = 0; j < 3; j++)
 			{
 				p[j] = vertices_[face->mIndices[j]];
-				p[j] = vec3(p[j].x() * scale.x(), p[j].y() * scale.y(), p[j].z() * scale.z());
+				p[j] = vec3(p[j].x() * scale.x(), p[j].y() * scale.y(), p[j].z() * scale.z()); 
+				if (uvChannelCount > 0)
+				{
+					uv[j] = texcoords_[face->mIndices[j]];
+				}
 			}
-			triangle* tri = new triangle(p[0], p[1], p[2], mp);
+			
+			triangle* tri = new triangle(p[0], p[1], p[2],  mp, uv[0], uv[1], uv[2]);
 			triangles.push_back(tri);
 		}
 	}
