@@ -259,6 +259,24 @@ public:
 	float fuzz;
 };
 
+class toon : public material {
+public:
+	toon(const texture* a) : albedo(a){}
+	   float scattering_pdf(const ray& r_in, const hit_record& rec, const ray& scattered) const {
+		   float consine = dot(rec.normal, unit_vector(scattered.direction()));
+		   if (consine < 0) consine = 0;
+		   return consine / M_PI;
+		   //return 1 / M_PI;
+	   }
+	   virtual bool scatter(const ray& r_in, const hit_record& hrec, scatter_record& srec) const {
+		   srec.is_specular = false;
+		   srec.attenuation = albedo->value(hrec.u, hrec.v, hrec.p);
+		   srec.pdf_ptr = new cosine_pdf(hrec.normal);
+		   return true;
+	   }
+
+	   texture *albedo;
+};
 
 class dielectric : public material {
 public:

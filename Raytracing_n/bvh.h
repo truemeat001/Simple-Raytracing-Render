@@ -4,6 +4,7 @@
 #include "hitable.h"
 #include "mathf.h"
 #include "aabb.h"
+#include "hitable_list.h"
 
 class bvh_node :public hitable {
 public:

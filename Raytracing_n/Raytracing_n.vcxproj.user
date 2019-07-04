@@ -8,4 +8,8 @@
     <LocalDebuggerEnvironment>path=$(SolutionDir)external\assimp\bin\assimp_debug-dll_win32;</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LocalDebuggerEnvironment>path=$(SolutionDir)external\assimp\bin\assimp_release-dll_x64; $(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
 </Project>
