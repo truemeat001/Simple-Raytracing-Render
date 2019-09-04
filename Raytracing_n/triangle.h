@@ -4,6 +4,7 @@
 #include "hitable.h"
 #include "vec3.h"
 #include <iostream>
+#define FLAT_NORMAL 1
 
 class triangle : public hitable
 {
@@ -31,6 +32,22 @@ public :
 		normal = cross(p1 - p0, p2 - p0);
 		normal = unit_vector(normal);
 	};
+
+	triangle(vec3 _p0, vec3 _p1, vec3 _p2, material* mat, vec3 _uv0, vec3 _uv1, vec3 _uv2, vec3 _n0, vec3 _n1, vec3 _n2):
+		p0(_p0), p1(_p1), p2(_p2), mp(mat), n0(_n0), n1(_n1), n2(_n2)
+	{
+		points[0] = p0;
+		points[1] = p1;
+		points[2] = p2;
+		uvs[0] = _uv0;
+		uvs[1] = _uv1;
+		uvs[2] = _uv2;
+		normal = cross(p1 - p0, p2 - p0);
+		normal = unit_vector(normal);
+		normals[0] = n0;
+		normals[1] = n1;
+		normals[2] = n2;
+	}
 	
 	virtual bool hit(const ray& r, float t0, float t1, hit_record& rec, bool is_medium = false) const;
 	virtual bool bounding_box(float t0, float t1, aabb& box)const {
@@ -79,9 +96,11 @@ public :
 	material *mp;
 	vec3 normal;
 	vec3 p0, p1, p2;
+	vec3 n0, n1, n2;
 
 	vec3 points[3];
 	vec3 uvs[3];
+	vec3 normals[3];
 private:
 	bool hit(bool isfront, const ray& r, float t0, float t1, hit_record& rec) const;
 };
@@ -157,6 +176,11 @@ bool triangle::hit(bool isfront, const ray& r, float t0, float t1, hit_record& r
 	rec.mat_ptr = mp;
 
 	rec.normal = normal;
+	if (FLAT_NORMAL)
+	{
+		rec.normal = (1 - u - v) * n0 + u * n1 + v * n2;
+		rec.normal = unit_vector(rec.normal);
+	}
 	rec.p = (1 - u - v) * p0 + u * p1 + v * p2;
 	//t = (rec.p - r.origin()).length();
 	rec.t = t;

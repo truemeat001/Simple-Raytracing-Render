@@ -14,6 +14,7 @@ public :
 private:
 	std::vector<vec3> vertices_;
 	std::vector<vec3> texcoords_;
+	std::vector<vec3> normals_;
 	std::vector<triangle*> triangles;
 	int triangleCount;
 	material* mp;
@@ -40,6 +41,11 @@ geometry::geometry(aiMesh& mesh, material *mat, vec3 scale)
 				texcoords_.push_back(vec3(reinterpret_cast<const float*>(&aiTextureCoordinates[j])));
 			}
 		}
+		normals_.reserve(mesh.mNumVertices);
+		for (int i = 0; i < mesh.mNumVertices; i++)
+		{
+			normals_.push_back(vec3(reinterpret_cast<const float*>(&mesh.mNormals[i])));
+		}
 	}
 	
 
@@ -47,9 +53,10 @@ geometry::geometry(aiMesh& mesh, material *mat, vec3 scale)
 	{
 		triangleCount = mesh.mNumFaces;
 		triangles.reserve(triangleCount);
-		aiVector3D *normals = mesh.mNormals;
+		//aiVector3D *normals = mesh.mNormals;
 		vec3 p[3];
 		vec3 uv[3];
+		vec3 n[3];
 		for (int i = 0; i < triangleCount; i++)
 		{
 			aiFace* face = &mesh.mFaces[i];
@@ -57,13 +64,14 @@ geometry::geometry(aiMesh& mesh, material *mat, vec3 scale)
 			{
 				p[j] = vertices_[face->mIndices[j]];
 				p[j] = vec3(p[j].x() * scale.x(), p[j].y() * scale.y(), p[j].z() * scale.z()); 
+				n[j] = normals_[face->mIndices[j]];
 				if (uvChannelCount > 0)
 				{
 					uv[j] = texcoords_[face->mIndices[j]];
 				}
 			}
 			
-			triangle* tri = new triangle(p[0], p[1], p[2],  mp, uv[0], uv[1], uv[2]);
+			triangle* tri = new triangle(p[0], p[1], p[2],  mp, uv[0], uv[1], uv[2], n[0], n[1], n[2]);
 			triangles.push_back(tri);
 		}
 	}
