@@ -17,6 +17,7 @@ private:
 	std::vector<vec3> normals_;
 	std::vector<triangle*> triangles;
 	int triangleCount;
+	bool bHasNormal;
 	material* mp;
 };
 

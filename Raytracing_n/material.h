@@ -143,6 +143,7 @@ public:
 		srec.pdf_ptr = new onrennayar_pdf(hrec.normal, A, B);
 		return true;
 	}
+	
 	texture* albedo;
 	float A, B;
 };
