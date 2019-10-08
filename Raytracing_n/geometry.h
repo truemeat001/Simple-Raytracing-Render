@@ -81,6 +81,7 @@ geometry::geometry(aiMesh& mesh, material *mat, vec3 scale)
 hitable** geometry::gethitablegeometry()
 {
 	hitable** trianglelist = new hitable*[triangleCount];
+	bool hit = false;
 	for (int i = 0; i < triangleCount; i++)
 	{
 		trianglelist[i] = triangles[i];

@@ -22,6 +22,7 @@ public:
 	int gettrianglecount();
 private:
 	std::vector<geometry*> geometries_;
+	int triangleCount;
 };
 
 model::model(const string& filename, bool flipUVs, bool flipWindingOrder, material *mat, vec3 scale)
@@ -44,13 +45,14 @@ model::model(const string& filename, bool flipUVs, bool flipWindingOrder, materi
 	{
 
 	}
-
+	triangleCount = 0;
 	if (scene->HasMeshes())
 	{
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
 			geometry *geo = new geometry(*(scene->mMeshes[i]), mat, scale);
 			geometries_.push_back(geo);
+			triangleCount += geo->gettrianglecount();
 		}
 	}
 	
@@ -72,7 +74,20 @@ const std::vector<geometry*>& model::geometries() const
 
 hitable** model::genhitablemodel() 
 {
-	return geometries_[0]->gethitablegeometry();
+	hitable** hitables = new hitable*[triangleCount];
+	int _index = 0;
+	for (int i = 0; i < geometries_.size(); i++)
+	{
+		memcpy(hitables + _index, geometries_[i]->gethitablegeometry(), geometries_[i]->gettrianglecount());
+		_index += geometries_[i]->gettrianglecount();
+		/*for (int j = 0; j < geometries_[i]->gettrianglecount(); j++)
+		{
+			hitables[_index] = geometries_[i]->gethitablegeometry()[j];
+			_index++;
+		}*/
+	}
+	return hitables;
+	//return geometries_[0]->gethitablegeometry();
 }
 
 int model::gettrianglecount()
