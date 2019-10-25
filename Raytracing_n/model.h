@@ -86,12 +86,18 @@ hitable** model::genhitablemodel()
 			_index++;
 		}*/
 	}
-	return hitables;
-	//return geometries_[0]->gethitablegeometry();
+	//return hitables;
+	return geometries_[0]->gethitablegeometry();
 }
 
 int model::gettrianglecount()
 {
+	int count = 0;
+	for (int i = 0; i < geometries_.size(); i++)
+	{
+		count += geometries_[i]->gettrianglecount();
+	}
+	//return count;
 	return geometries_[0]->gettrianglecount();
 }
 #endif
