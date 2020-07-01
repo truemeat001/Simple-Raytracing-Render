@@ -83,13 +83,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\MEGAsync\Raytracing_n\external\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\MEGAsync\Raytracing_n\external\assimp\lib\assimp_release-dll_win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\external\assimp\include;$(VC_IncludePath);$(WindowSDK_IncludePath);$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\external\assimp\lib\assimp_release-dll_win32;$(VC_LibraryPath_X86);$(WindowSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <ExecutablePath>E:\WorkSpace\MEGAsync\Raytracing_n\external\assimp\bin\assimp_release-dll_win32;$(ExecutablePath)</ExecutablePath>
-    <LibraryPath>E:\WorkSpace\MEGAsync\Raytracing_n\external\assimp\lib\assimp_release-dll_win32;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ProjectDir)..\external\assimp\bin\assimp_release-dll_win32;$(ExecutablePath)</ExecutablePath>
+    <LibraryPath>$(ProjectDir)..\external\assimp\lib\assimp_release-dll_win32;$(LibraryPath)</LibraryPath>
+    <ReferencePath>$(ProjectDir)..\external\assimp\include;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,15 +142,16 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\assimp\include;$(ProjectDir)..\imgui;$(ProjectDir)..\imgui\examples;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\assimp\lib\assimp_release-dll_win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\assimp\lib\assimp_release-dll_win32;$(DXSDK_DIR)/Lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc140-mt.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,7 +166,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>E:\WorkSpace\MEGAsync\Raytracing_n\external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -176,6 +178,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\imgui\examples\imgui_impl_dx11.h" />
+    <ClInclude Include="..\imgui\examples\imgui_impl_win32.h" />
+    <ClInclude Include="..\imgui\imconfig.h" />
+    <ClInclude Include="..\imgui\imgui.h" />
+    <ClInclude Include="..\imgui\imgui_internal.h" />
     <ClInclude Include="aabb.h" />
     <ClInclude Include="aarect.h" />
     <ClInclude Include="box.h" />
@@ -197,6 +204,7 @@
     <ClInclude Include="perlin.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="reflection.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="rng.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="stb_image.h" />
@@ -209,7 +217,15 @@
     <ClInclude Include="camera.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\imgui\imgui.cpp" />
+    <ClCompile Include="..\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Raytracing_n.cpp" />
+    <ClCompile Include="Render.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

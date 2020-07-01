@@ -53,7 +53,7 @@ bool translate::hit(const ray& r, float t_min, float t_max, hit_record& rec, boo
 
 bool translate::bounding_box(float t0, float t1, aabb& box) const {
 	if (ptr->bounding_box(t0, t1, box)) {
-		box = aabb(box.min() + offset, box.max() + offset);
+		box = aabb(box.Max() + offset, box.Max() + offset);
 		return true;
 	}
 	else
@@ -83,27 +83,27 @@ rotate_y::rotate_y(hitable *p, float angle) :ptr(p) {
 	sin_theta = sin(radians);
 	cos_theta = cos(radians);
 	hasbox = ptr->bounding_box(0, 1, bbox);
-	vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
-	vec3 max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	vec3 _min(FLT_MAX, FLT_MAX, FLT_MAX);
+	vec3 _max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 	for(int i =0; i < 2; i++)
 		for(int j = 0; j < 2; j++)
 			for (int k = 0; k < 2; k++)
 			{
-				float x = i * bbox.max().x() + (1 - i)*bbox.min().x();
-				float y = j * bbox.max().y() + (1 - j)*bbox.min().y();
-				float z = k * bbox.max().z() + (1 - k)*bbox.min().z();
+				float x = i * bbox.Max().x() + (1 - i)*bbox.Min().x();
+				float y = j * bbox.Max().y() + (1 - j)*bbox.Min().y();
+				float z = k * bbox.Max().z() + (1 - k)*bbox.Min().z();
 				float newx = cos_theta * x + sin_theta * z;
 				float newz = -sin_theta * x + cos_theta * z;
 				vec3 tester(newx, y, newz);
 				for (int c = 0; c < 3; c++)
 				{
-					if (tester[c] > max[c])
-						max[c] = tester[c];
-					if (tester[c] < min[c])
-						min[c] = tester[c];
+					if (tester[c] > _max[c])
+						_max[c] = tester[c];
+					if (tester[c] < _min[c])
+						_min[c] = tester[c];
 				}
 			}
-	bbox = aabb(min, max);
+	bbox = aabb(_min, _max);
 }
 
 bool rotate_y::hit(const ray& r, float t_min, float t_max, hit_record& rec, bool is_medium ) const {
@@ -153,28 +153,28 @@ rotate_x::rotate_x(hitable *p, float angle): ptr(p) {
 	sin_theta = sin(radians);
 	cos_theta = cos(radians);
 	hasbox = ptr->bounding_box(0, 1, bbox);
-	vec3 min(FLT_MAX, FLT_MAX, FLT_MAX);
-	vec3 max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+	vec3 _min(FLT_MAX, FLT_MAX, FLT_MAX);
+	vec3 _max(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 	for (int i = 0; i < 2; i++)
 		for (int j = 0; j < 2; j++)
 			for (int k = 0; k < 2; k++)
 			{
-				float x = i * bbox.max().x() + (1 - i)*bbox.min().x();
-				float y = j * bbox.max().y() + (1 - j)*bbox.min().y();
-				float z = k * bbox.max().z() + (1 - k)*bbox.min().z();
+				float x = i * bbox.Max().x() + (1 - i)*bbox.Min().x();
+				float y = j * bbox.Max().y() + (1 - j)*bbox.Min().y();
+				float z = k * bbox.Max().z() + (1 - k)*bbox.Min().z();
 				float newy = cos_theta * y + sin_theta * z;
 				float newz = -sin_theta * y + cos_theta * z;
 				vec3 tester(x, newy, newz);
 				for (int c = 0; c < 3; c++)
 				{
-					if (tester[c] > max[c])
-						max[c] = tester[c];
-					if (tester[c] < min[c])
-						min[c] = tester[c];
+					if (tester[c] > _max[c])
+						_max[c] = tester[c];
+					if (tester[c] < _min[c])
+						_min[c] = tester[c];
 				}
 
 			}
-	bbox = aabb(min, max);
+	bbox = aabb(_min, _max);
 }
 
 bool rotate_x::hit(const ray &r, float t_min, float t_max, hit_record& rec, bool is_medium = false) const

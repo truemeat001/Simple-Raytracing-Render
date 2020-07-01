@@ -4,7 +4,6 @@
 
 #include "vec3.h"
 #include "ray.h"
-
 inline float ffmin(float a, float b) { return a < b ? a : b; }
 inline float ffmax(float a, float b) { return a > b ? a : b; }
 using namespace std;
@@ -13,8 +12,8 @@ public:
 	aabb() {}
 	aabb(const vec3& a, const vec3& b) { _min = a; _max = b; }
 
-	vec3 min() const { return _min; }
-	vec3 max() const { return _max; }
+	vec3 Min() const { return _min; }
+	vec3 Max() const { return _max; }
 
 	/*bool hit(const ray& r, float tmin, float tmax) const {
 		for (int a = 0; a < 3; a++)
@@ -35,8 +34,8 @@ public:
 		for (int a = 0; a < 3; a++)
 		{
 			float invD = 1.0f / r.direction()[a];
-			float t0 = (min()[a] - r.origin()[a]) * invD;
-			float t1 = (max()[a] - r.origin()[a]) * invD;
+			float t0 = (Min()[a] - r.origin()[a]) * invD;
+			float t1 = (Max()[a] - r.origin()[a]) * invD;
 			if (invD < 0.0f)
 			{
 				std::swap(t0, t1);
@@ -53,12 +52,12 @@ public:
 };
 
 aabb surrounding_box(aabb box0, aabb box1) {
-	vec3 small(ffmin(box0.min().x(), box1.min().x()),
-			   ffmin(box0.min().y(), box1.min().y()),
-			   ffmin(box0.min().z(), box1.min().z()));
-	vec3 big  (ffmax(box0.max().x(), box1.max().x()),
-			   ffmax(box0.max().y(), box1.max().y()),
-			   ffmax(box0.max().z(), box1.max().z()));
-	return aabb(small, big);
+	vec3 _small(ffmin(box0.Min().x(), box1.Min().x()),
+			   ffmin(box0.Min().y(), box1.Min().y()),
+			   ffmin(box0.Min().z(), box1.Min().z()));
+	vec3 _big  (ffmax(box0.Max().x(), box1.Max().x()),
+			   ffmax(box0.Max().y(), box1.Max().y()),
+			   ffmax(box0.Max().z(), box1.Max().z()));
+	return aabb(_small, _big);
 }
 #endif // ! AABBH
