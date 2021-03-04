@@ -155,12 +155,6 @@
     <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Raytracing_n.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
