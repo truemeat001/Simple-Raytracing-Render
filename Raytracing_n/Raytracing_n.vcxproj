@@ -142,7 +142,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\assimp\include;$(ProjectDir)..\imgui;$(ProjectDir)..\imgui\examples;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
@@ -178,11 +178,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\imgui\examples\imgui_impl_dx11.h" />
-    <ClInclude Include="..\imgui\examples\imgui_impl_win32.h" />
-    <ClInclude Include="..\imgui\imconfig.h" />
-    <ClInclude Include="..\imgui\imgui.h" />
-    <ClInclude Include="..\imgui\imgui_internal.h" />
     <ClInclude Include="aabb.h" />
     <ClInclude Include="aarect.h" />
     <ClInclude Include="box.h" />
@@ -217,12 +212,6 @@
     <ClInclude Include="camera.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\imgui\examples\imgui_impl_dx11.cpp" />
-    <ClCompile Include="..\imgui\examples\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\imgui\imgui.cpp" />
-    <ClCompile Include="..\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Raytracing_n.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
